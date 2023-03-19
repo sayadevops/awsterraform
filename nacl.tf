@@ -1,14 +1,14 @@
 # NACL
-resource "aws_network_acl" "lms-nacl" {
-  vpc_id = aws_vpc.lms.id
+resource "aws_network_acl" "ecommerce-nacl" {
+  vpc_id = aws_vpc.ecommerce.id
   tags = {
-    Name = "lms-nacl"
+    Name = "ecommerce-nacl"
   }
 }
 
 # NACL Rules - Inbound
-resource "aws_network_acl_rule" "lms-ingress" {
-  network_acl_id = aws_network_acl.lms-nacl.id
+resource "aws_network_acl_rule" "ecommerce-ingress" {
+  network_acl_id = aws_network_acl.ecommerce-nacl.id
   rule_number    = 100
   egress         = false
   protocol       = "tcp"
@@ -19,8 +19,8 @@ resource "aws_network_acl_rule" "lms-ingress" {
 }
 
 # NACL Rules - Outbound
-resource "aws_network_acl_rule" "lms-egress" {
-  network_acl_id = aws_network_acl.lms-nacl.id
+resource "aws_network_acl_rule" "ecommerce-egress" {
+  network_acl_id = aws_network_acl.ecommerce-nacl.id
   rule_number    = 100
   egress         = true
   protocol       = "tcp"
@@ -32,6 +32,6 @@ resource "aws_network_acl_rule" "lms-egress" {
 
 # NACL - Subnet - Association
 resource "aws_network_acl_association" "nacl-subnet" {
-  network_acl_id = aws_network_acl.lms-nacl.id
-  subnet_id      = aws_subnet.lms-subnet.id
+  network_acl_id = aws_network_acl.ecommerce-nacl.id
+  subnet_id      = aws_subnet.ecommerce-subnet.id
 }
